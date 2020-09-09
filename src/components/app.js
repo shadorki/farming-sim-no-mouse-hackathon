@@ -26,7 +26,7 @@ export default class App {
     }
     directionHandler[direction]()
     if(this.map.checkIfWalkable(x, y, direction)) {
-      console.log('movable')
+      this.player.updatePosition(x, y)
     }
   }
   setListeners() {
