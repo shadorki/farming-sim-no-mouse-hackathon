@@ -30,7 +30,7 @@ div.tile-block {
 }
 
 div.player {
-  background-image: url('./assets/images/characters/pinkie/pinkie-forward-walking.gif');
+  background-image: url('./assets/images/characters/pinkie/idle/front.png');
   background-position: center;
   background-repeat: no-repeat;
   background-size: contain;

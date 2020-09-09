@@ -5,10 +5,7 @@ export default class App {
     this.container = container
     this.map = new Level()
   }
-  renderMaps() {
-
-  }
   start() {
-    this.renderMaps()
+    console.log(this.map.tileMap)
   }
 }
