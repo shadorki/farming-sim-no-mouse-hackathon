@@ -31,11 +31,27 @@ div.tile-block {
 
 div.player {
   position: relative;
-  background-image: url('./assets/images/characters/pinkie/idle/front.png');
   background-position: center;
   background-repeat: no-repeat;
   background-size: contain;
   height: 32px;
   width: 16px;
   image-rendering: initial;
+}
+.player.down {
+  background-image: url('./assets/images/characters/pinkie/idle/front.png');
+}
+.player.up {
+  background-image: url('./assets/images/characters/pinkie/idle/back.png');
+}
+.player.left, .player.right {
+  background-image: url('./assets/images/characters/pinkie/idle/right.png');
+}
+.player.left {
+    -moz-transform: scaleX(-1);
+    -o-transform: scaleX(-1);
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+    filter: FlipH;
+    -ms-filter: "FlipH";
 }

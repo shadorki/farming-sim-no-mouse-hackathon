@@ -36,4 +36,9 @@ export default class Level {
 
     return map
   }
+  checkIfWalkable(x, y, direction) {
+    const tile = this.tileMap[`${x}/${y}`]
+    if(!tile) return false;
+    return tile.isWalkable
+  }
 }
