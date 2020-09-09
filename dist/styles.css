@@ -30,6 +30,7 @@ div.tile-block {
 }
 
 div.player {
+  position: relative;
   background-image: url('./assets/images/characters/pinkie/idle/front.png');
   background-position: center;
   background-repeat: no-repeat;
