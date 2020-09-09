@@ -16,6 +16,7 @@ export default class Player {
     this.updatePositionOnDom()
   }
   updateDirection(direction) {
+    if(direction === this.direction) return;
     this.direction = direction
     this.updateDirectionOnDom()
   }

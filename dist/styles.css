@@ -37,6 +37,8 @@ div.player {
   height: 32px;
   width: 16px;
   image-rendering: initial;
+  transition: all 500ms linear;
+  transition-property: left, top;
 }
 .player.down {
   background-image: url('./assets/images/characters/pinkie/idle/front.png');
