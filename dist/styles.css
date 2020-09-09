@@ -28,3 +28,13 @@ div.tile-block {
   width: 16px;
   border: 1px solid red;
 }
+
+div.player {
+  background-image: url('./assets/images/characters/pinkie/pinkie-forward-walking.gif');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  height: 32px;
+  width: 16px;
+  image-rendering: initial;
+}
