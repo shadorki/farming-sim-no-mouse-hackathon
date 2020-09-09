@@ -50,10 +50,19 @@ div.player {
   background-image: url('./assets/images/characters/pinkie/idle/right.png');
 }
 .player.left {
-    -moz-transform: scaleX(-1);
-    -o-transform: scaleX(-1);
-    -webkit-transform: scaleX(-1);
-    transform: scaleX(-1);
-    filter: FlipH;
-    -ms-filter: "FlipH";
+  -moz-transform: scaleX(-1);
+  -o-transform: scaleX(-1);
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
+  filter: FlipH;
+  -ms-filter: "FlipH";
+}
+.player.down.walking {
+  background-image: url('./assets/images/characters/pinkie/animated/forward-walking.gif');
+}
+.player.up.walking {
+  background-image: url('./assets/images/characters/pinkie/animated/backward-walking.gif');
+}
+.player.left.walking, .player.right.walking {
+  background-image: url('./assets/images/characters/pinkie/animated/right-walking.gif');
 }

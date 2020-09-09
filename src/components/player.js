@@ -7,6 +7,15 @@ export default class Player {
     this.domElement.className = `player ${this.direction}`
     this.updatePositionOnDom()
   }
+  setListeners() {
+    this.domElement.addEventListener('transitionstart', () => {
+      if(this.domElement.classList.contains('walking')) return;
+      this.domElement.classList.add('walking')
+    })
+    this.domElement.addEventListener('transitionend', () => {
+      this.domElement.classList.remove('walking')
+    })
+  }
   get position() {
     return[this.x, this.y]
   }

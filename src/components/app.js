@@ -31,6 +31,7 @@ export default class App {
   }
   setListeners() {
     window.addEventListener('keydown', this.handleKeyPress.bind(this))
+    this.player.setListeners()
   }
   setupPlayer() {
     this.container.appendChild(this.player.domElement)
