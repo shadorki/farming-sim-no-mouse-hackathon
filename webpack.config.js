@@ -7,10 +7,19 @@ module.exports = {
     "filename": "main.js"
   },
   devServer: {
-    contentBase: path.join(__dirname, 'dist')
+    contentBase: path.join(__dirname, 'dist'),
+    watchContentBase: true
   },
   "module": {
     "rules": [
+      {
+        test: /\.(png|jpe?g|gif)$/i,
+        use: [
+          {
+            loader: 'file-loader',
+          },
+        ],
+      },
       {
         "test": /\.js$/,
         "exclude": /node_modules/,

@@ -1,0 +1,30 @@
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(50, 50, 50)
+}
+
+#container {
+  width: 320px;
+  height: 240px;
+  background-image: url('./assets/images/maps/map1.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  transform: scale(2.0);
+  image-rendering: pixelated;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+div.tile-block {
+  height: 32px;
+  width: 16px;
+  border: 1px solid red;
+}
