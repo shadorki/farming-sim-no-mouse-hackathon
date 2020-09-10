@@ -68,12 +68,25 @@ export default class App {
     if(direction === 'action') {
       // If the user pressed the space bar then we use the current location instead of an updated direction
       directionHandler[this.player.direction]()
-      if(this.map.checkIfPlantable(x, y)) {
-        const tile = this.map.getTile(x, y)
-        this.setCurrentTile(tile)
-        this.modal.generateSeedModal(this.inventory.getSeeds())
-        this.setView('seedSelection')
+      const action = this.tools.selectedActionToExecute
+      const tile = this.map.getTile(x, y)
+      const actions = {
+        inventory: () => {
+          if (this.map.checkIfPlantable(x, y)) {
+            this.setCurrentTile(tile)
+            this.modal.generateSeedModal(this.inventory.getSeeds())
+            this.setView('seedSelection')
+          }
+        },
+        shovel: () => {},
+        'watering-can': () => {
+          if(tile.crop === null) return;
+          if(tile.crop.isWatered) return;
+          tile.crop.water()
+        },
+        hoe: () => {}
       }
+      actions[action]()
     } else {
       this.player.updateDirection(direction)
       directionHandler[direction]()

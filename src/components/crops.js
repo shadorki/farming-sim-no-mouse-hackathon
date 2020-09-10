@@ -116,4 +116,8 @@ export default class Crop {
   grow() {
     this.age++
   }
+  water() {
+    this.isWatered = true
+    this.domElement.firstElementChild.classList.add('watered')
+  }
 }
