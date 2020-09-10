@@ -24,6 +24,14 @@ export default class Inventory {
       this.inventory.seeds[seed.type] = [seed]
     }
   }
+  removeSeed(type) {
+    const seedList = this.inventory.seeds[type]
+    if(!seedList) return;
+    seedList.pop()
+    if(!seedList.length) {
+      delete this.inventory.seeds[type]
+    }
+  }
   addCrop(crop) {
     const cropList = this.inventory.crops[crop.type]
     if (cropList) {

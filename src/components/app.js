@@ -82,6 +82,9 @@ export default class App {
       }
     }
   }
+  plantSeed(type) {
+    this.inventory.removeSeed(type)
+  }
   handleToolNavigation(key) {
     const action = this.toolsNavigateKeyMap[key]
     this.tools.navigate(action)
@@ -92,6 +95,7 @@ export default class App {
   setCallbacks() {
     this.modal.setViewCb(this.setView.bind(this))
     this.modal.setCurrentTileCb(this.setCurrentTile.bind(this))
+    this.modal.setPlantSeedCb(this.plantSeed.bind(this))
   }
   setListeners() {
     window.addEventListener('keydown', this.handleKeyPress.bind(this))

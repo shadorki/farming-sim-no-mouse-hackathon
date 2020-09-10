@@ -5,6 +5,8 @@ export default class Modal {
     this.setCurrentTile = null
     this.elementsToNavigate = null
     this.navigationPosition = 0
+    this.selectedSeed = null
+    this.plantSeed = null
   }
   show() {
     this.modalContainer.classList.remove('hidden')
@@ -15,6 +17,7 @@ export default class Modal {
       this.modalContainer.classList.add('hidden')
     }
     this.elementsToNavigate = null
+    this.selectedSeed = null
     this.navigationPosition = 0
     this.setView('map')
     this.setCurrentTile(null)
@@ -24,6 +27,9 @@ export default class Modal {
   }
   setCurrentTileCb(cb) {
     this.setCurrentTile = cb
+  }
+  setPlantSeedCb(cb) {
+    this.plantSeed = cb
   }
   generateSeedModal(seeds) {
     const [title, content] = this.modalContainer.children[0].children
@@ -41,6 +47,7 @@ export default class Modal {
       seedElements.push(seedElement)
     }
     seedElements[0].classList.add('selected')
+    this.selectedSeed = seedElements[0]
     this.elementsToNavigate = seedElements
     content.append(...seedElements)
     this.show()
@@ -62,14 +69,27 @@ export default class Modal {
           this.navigationPosition++
         }
       },
-      close: this.hide.bind(this)
+      close: this.hide.bind(this),
+      select: this.selectSeed.bind(this)
     }
     actions[action]()
-    if(action === 'close') return;
+    if(action === 'close' || action === 'select') return;
     for (let i = 0; i < this.elementsToNavigate.length; i++) {
       this.elementsToNavigate[i].classList.remove('selected')
     }
     const currentSeed = this.elementsToNavigate[this.navigationPosition]
     currentSeed.classList.add('selected')
+    this.selectedSeed = currentSeed
+  }
+  selectSeed() {
+    const { type } = this.selectedSeed.dataset
+    if (!this.modalContainer.classList.contains('hidden')) {
+      this.modalContainer.classList.add('hidden')
+    }
+    this.elementsToNavigate = null
+    this.selectedSeed = null
+    this.navigationPosition = 0
+    this.setView('map')
+    this.plantSeed(type)
   }
 }
