@@ -61,4 +61,8 @@ export default class Level {
     tile.destroyCrop()
     this.plantedTiles = this.plantedTiles.filter(t => t !== tile)
   }
+  setShop(x, y) {
+    const tile = this.getTile(x, y)
+    tile.setShop(true)
+  }
 }

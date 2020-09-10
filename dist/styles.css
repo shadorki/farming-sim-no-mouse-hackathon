@@ -200,6 +200,15 @@ div.player {
   flex-wrap: wrap;
   padding: 6px 0;
 }
+.shop {
+  position: absolute;
+  height: 48px;
+  width: 48px;
+  background-image: url('./assets/images/characters/shop/shop.png');
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
 
 
 .hidden {

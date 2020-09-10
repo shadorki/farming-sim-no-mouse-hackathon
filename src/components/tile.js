@@ -6,6 +6,7 @@ export default class Tile {
     this.y = y
     this.isPlantable = isPlantable
     this.isWalkable = isWalkable
+    this.isShop = false
     this.crop = null
   }
   get hasCrop() {
@@ -31,5 +32,8 @@ export default class Tile {
   }
   harvestCrop() {
     return this.crop.harvest()
+  }
+  setShop(bool) {
+    this.isShop = bool
   }
 }

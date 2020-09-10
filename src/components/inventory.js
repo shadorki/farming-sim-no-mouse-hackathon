@@ -3,12 +3,11 @@ export default class Inventory {
   constructor() {
     this.seeds = {}
     this.crops = {}
-    this.generateStarterSeeds()
   }
-  generateStarterSeeds() {
+  generateStarterSeeds(quantity) {
     const seedTypes = ['onion', 'string-bean', 'tomato', 'plum', 'pineapple', 'strawberry', 'potato', 'pumpkin', 'corn']
     for(let i = 0; i < seedTypes.length; i++) {
-      for(let j = 0; j < 10; j++) {
+      for(let j = 0; j < quantity; j++) {
         this.addSeed(new Seed(seedTypes[i]))
       }
     }

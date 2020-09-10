@@ -3,12 +3,14 @@ import Player from './player'
 import Tools from './tools'
 import Inventory from './inventory'
 import Modal from './modal'
+import Shop from './shop'
 
 export default class App {
   constructor(container, modalContainer) {
     this.container = container
     this.time = 0;
     this.gameLoopIntervalId = null;
+    this.shop = new Shop(17, 0)
     this.map = new Level()
     this.player = new Player(19, 5, 'down')
     this.tools = new Tools()
@@ -93,33 +95,37 @@ export default class App {
         directionHandler[this.player.direction]()
         const action = this.tools.selectedActionToExecute
         const tile = this.map.getTile(x, y)
-        const actions = {
-          inventory: () => {
-            if (this.map.checkIfPlantable(x, y)) {
-              this.setCurrentTile(tile)
-              this.modal.generateSeedModal(this.inventory.getSeeds())
-              this.setView('seedSelection')
+        if(tile.isShop) {
+          console.log('sho')
+        } else {
+          const actions = {
+            inventory: () => {
+              if (this.map.checkIfPlantable(x, y)) {
+                this.setCurrentTile(tile)
+                this.modal.generateSeedModal(this.inventory.getSeeds())
+                this.setView('seedSelection')
+              }
+            },
+            shovel: () => {
+              if (!tile.hasCrop) return;
+              if (!tile.isCropReadyToHarvest) return;
+              const harvestedCrop = tile.harvestCrop()
+              this.inventory.addCrop(harvestedCrop)
+              console.log(this.inventory)
+              this.map.removePlantedTile(tile)
+            },
+            'watering-can': () => {
+              if (!tile.hasCrop) return;
+              if (tile.isCropWatered || tile.isCropReadyToHarvest) return;
+              tile.waterCrop()
+            },
+            hoe: () => {
+              if (!tile.hasCrop) return;
+              this.map.removePlantedTile(tile)
             }
-          },
-          shovel: () => {
-            if (!tile.hasCrop) return;
-            if (!tile.isCropReadyToHarvest) return;
-            const harvestedCrop = tile.harvestCrop()
-            this.inventory.addCrop(harvestedCrop)
-            console.log(this.inventory)
-            this.map.removePlantedTile(tile)
-          },
-          'watering-can': () => {
-            if (!tile.hasCrop) return;
-            if (tile.isCropWatered || tile.isCropReadyToHarvest) return;
-            tile.waterCrop()
-          },
-          hoe: () => {
-            if (!tile.hasCrop) return;
-            this.map.removePlantedTile(tile)
           }
+          actions[action]()
         }
-        actions[action]()
       break;
       case 'inventory':
         // open inventory
@@ -162,10 +168,14 @@ export default class App {
   setupDomElements() {
     this.container.appendChild(this.player.domElement)
     this.container.appendChild(this.tools.domElement)
+    this.container.appendChild(this.shop.domElement)
+    this.shop.setPositionOnDom()
   }
   start() {
     this.setCallbacks()
     this.setupDomElements()
+    this.inventory.generateStarterSeeds(3)
+    this.map.setShop(18, 0)
     this.setListeners()
     this.startGameLoop()
     console.log(this.map.tileMap)
