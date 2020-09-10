@@ -38,4 +38,10 @@ export default class Inventory {
   getCrops() {
     return this.crops
   }
+  getInventory() {
+    return {
+      seeds: this.seeds,
+      crops: this.crops
+    }
+  }
 }

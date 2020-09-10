@@ -7,6 +7,7 @@ export default class Modal {
     this.navigationPosition = 0
     this.selected = null
     this.plantSeed = null
+    this.shopView = null
   }
   show() {
     this.modalContainer.classList.remove('hidden')
@@ -89,6 +90,52 @@ export default class Modal {
     content.append(...elements)
     this.show()
   }
+  generateShopModal(userCrops, shopSeeds) {
+    const [title, subheading, content] = this.modalContainer.children[0].children
+    title.innerHTML = ''
+    content.innerHTML = ''
+    subheading.textContent = ''
+    this.shopView = 'Buy'
+    title.textContent = this.shopView
+    const userElements = []
+    const shopElements = []
+    for (const crop in userCrops) {
+      const cropElement = document.createElement('div')
+      cropElement.className = `crop ${crop}`
+      cropElement.style.backgroundPosition = userCrops[crop][0].backgroundCoords.join(' ')
+      cropElement.setAttribute('data-type', type)
+      const cropPrice = document.createElement('div')
+      cropPrice.className = 'price'
+      cropPrice.textContent = userCrops[crop][0].worth
+      const cropCount = document.createElement('div')
+      cropCount.textContent = userCrops[crop].length
+      cropElement.append(cropPrice, cropCount)
+      userElements.push(cropElement)
+    }
+    for (const seed in shopSeeds) {
+      const seedElement = document.createElement('div')
+      seedElement.className = `seed ${seed}`
+      seedElement.setAttribute('data-type', seed)
+      const seedCounter = document.createElement('div')
+      seedCounter.textContent = shopSeeds[seed].length
+      const seedPrice = document.createElement('div')
+      seedPrice.className = 'price'
+      seedPrice.textContent = shopSeeds[seed][0].worth
+      seedElement.append(seedPrice, seedCounter)
+      shopElements.push(seedElement)
+    }
+    this.elementsToNavigate = {
+      Buy: shopElements,
+      Sell: userElements
+    }
+    console.log(this.elementsToNavigate)
+    this.elementsToNavigate[this.shopView][0].classList.add('selected')
+    this.selected = this.elementsToNavigate[this.shopView][0]
+    const { type } = this.selected.dataset
+    subheading.textContent = type;
+    content.append(...this.elementsToNavigate[this.shopView])
+    this.show()
+  }
   navigateSeedModal(action) {
     if(this.elementsToNavigate === null) return;
     const actions = {
@@ -120,6 +167,9 @@ export default class Modal {
     const { type } = this.selected.dataset
     const [, subheading] = this.modalContainer.children[0].children
     subheading.textContent = type;
+  }
+  navigateShopModal(action) {
+
   }
   selectSeed() {
     const { type } = this.selected.dataset

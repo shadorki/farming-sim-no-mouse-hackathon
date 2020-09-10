@@ -74,7 +74,8 @@ export default class App {
     const views = {
       map: () => this.handleMapViewKeyPress(key),
       seedSelection: () => this.handleSeedSelectionKeyPress(key),
-      inventory: () => this.handleInventorySelectionKeyPress(key)
+      inventory: () => this.handleInventorySelectionKeyPress(key),
+      shop: () => this.handleShopSelectionKeyPress(key)
     }
     views[this.view]()
   }
@@ -95,6 +96,11 @@ export default class App {
     if (!action) return;
     this.modal.navigateSeedModal(action)
   }
+  handleShopSelectionKeyPress(key) {
+    const action = this.shopKeyMap[key]
+    if (!action) return;
+    this.modal.navigateShopModal(action)
+  }
   handlePlayerMovement(key) {
     const direction = this.playerMovementKeyMap[key];
     let [x, y] = this.player.position
@@ -110,7 +116,8 @@ export default class App {
         const action = this.tools.selectedActionToExecute
         const tile = this.map.getTile(x, y)
         if(tile.isShop) {
-          console.log('sho')
+          this.modal.generateShopModal(this.inventory.getCrops(), this.shop.shopInventory.getSeeds())
+          this.setView('shop')
         } else {
           const actions = {
             inventory: () => {

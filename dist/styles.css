@@ -85,7 +85,6 @@ div.player {
   background-size: contain;
 }
 .wallet {
-  margin-right: 1px;
   height: 24px;
   width: 72px;
   background-image: url('./assets/images/ui/wallet-block.png');
@@ -99,7 +98,8 @@ div.player {
   align-items: center;
   justify-content: center;
   padding: 0 2px;
-  font-size: 10px;
+  font-size: 6px;
+  color: gold
 }
 .selected {
   border: 1px solid gold;
@@ -180,6 +180,13 @@ div.player {
   right: 1px;
   color: white;
   font-size: 4px;
+}
+.seed > .price, .crop > .price {
+  bottom: 1px;
+  left: 1px;
+  top: initial;
+  right: initial;
+  color: gold;
 }
 .modal-container {
   position: absolute;
