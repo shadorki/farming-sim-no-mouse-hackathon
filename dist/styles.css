@@ -21,6 +21,7 @@ body {
   image-rendering: pixelated;
   display: flex;
   flex-wrap: wrap;
+  position: relative;
 }
 
 div.tile-block {
@@ -65,4 +66,44 @@ div.player {
 }
 .player.left.walking, .player.right.walking {
   background-image: url('./assets/images/characters/pinkie/animated/right-walking.gif');
+}
+
+.tools-container {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  display: flex;
+}
+.tool-block {
+  margin-right: 1px;
+  height: 24px;
+  width: 24px;
+  background-image: url('./assets/images/tools/tool-block.png');
+  background-position: center;
+  background-size: contain;
+}
+.tool-block.selected {
+  border: 1px solid gold;
+}
+.tool-block:not(.selected) {
+  opacity: 0.4;
+}
+.tool {
+  height: 100%;
+  width: 100%;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.tool.inventory {
+  background-image: url('./assets/images/tools/seed-bag.png');
+}
+.tool.watering-can {
+  background-image: url('./assets/images/tools/watering-can.png');
+}
+.tool.shovel {
+  background-image: url('./assets/images/tools/shovel.png');
+}
+.tool.hoe {
+  background-image: url('./assets/images/tools/hoe.png');
 }
