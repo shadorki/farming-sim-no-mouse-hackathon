@@ -59,4 +59,8 @@ export default class Level {
     if (!tile) return false;
     return tile.isPlantable
   }
+  removePlantedTile(tile) {
+    tile.destroyCrop()
+    this.plantedTiles = this.plantedTiles.filter(t => t !== tile)
+  }
 }

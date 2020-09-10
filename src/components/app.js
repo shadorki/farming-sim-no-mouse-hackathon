@@ -89,11 +89,14 @@ export default class App {
         },
         shovel: () => {},
         'watering-can': () => {
-          if(tile.crop === null) return;
-          if(tile.crop.isWatered || tile.crop.isReadyToHarvest) return;
-          tile.crop.water()
+          if(!tile.hasCrop) return;
+          if(tile.isCropWatered || tile.isCropReadyToHarvest) return;
+          tile.waterCrop()
         },
-        hoe: () => {}
+        hoe: () => {
+          if (!tile.hasCrop) return;
+          this.map.removePlantedTile(tile)
+        }
       }
       actions[action]()
     } else {

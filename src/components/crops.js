@@ -137,4 +137,7 @@ export default class Crop {
     this.isWatered = true
     this.domElement.firstElementChild.classList.add('watered')
   }
+  kill() {
+    this.domElement.remove()
+  }
 }
