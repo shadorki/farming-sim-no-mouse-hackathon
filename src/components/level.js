@@ -39,8 +39,6 @@ export default class Level {
   }
   ageCrops() {
     if (!this.plantedTiles.length) return;
-    console.log('Aging..')
-    console.log(this.plantedTiles)
     this.plantedTiles.forEach(tile => tile.crop.grow())
   }
   getTile(x, y) {

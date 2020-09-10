@@ -122,7 +122,7 @@ div.player {
   height: 32px;
   width: 16px;
 }
-.crop {
+.crop-container > .crop {
   position: absolute;
   bottom: 0
 }
@@ -157,7 +157,7 @@ div.player {
 .seed.corn {
   background-position: -80px -144px;
 }
-.seed > div {
+.seed > div, .crop > div {
   position: absolute;
   top: 1px;
   right: 1px;

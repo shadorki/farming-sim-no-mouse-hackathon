@@ -21,7 +21,8 @@ export default class App {
       a: 'left',
       s: 'down',
       d: 'right',
-      ' ': 'action'
+      ' ': 'action',
+      i: 'inventory'
     }
     this.toolsNavigateKeyMap = {
       ArrowLeft: 'previous',
@@ -32,6 +33,13 @@ export default class App {
       d: 'next',
       Escape: 'close',
       ' ': 'select'
+    }
+    this.inventoryKeyMap = {
+      a: 'previous',
+      d: 'next',
+      Escape: 'close',
+      ' ': 'close',
+      Enter: 'close',
     }
   }
   startGameLoop() {
@@ -49,7 +57,8 @@ export default class App {
     console.log(key)
     const views = {
       map: () => this.handleMapViewKeyPress(key),
-      seedSelection: () => this.handleSeedSelectionKeyPress(key)
+      seedSelection: () => this.handleSeedSelectionKeyPress(key),
+      inventory: () => this.handleInventorySelectionKeyPress(key)
     }
     views[this.view]()
   }
@@ -65,6 +74,11 @@ export default class App {
     if(!action) return;
     this.modal.navigateSeedModal(action)
   }
+  handleInventorySelectionKeyPress(key) {
+    const action = this.inventoryKeyMap[key]
+    if (!action) return;
+    this.modal.navigateSeedModal(action)
+  }
   handlePlayerMovement(key) {
     const direction = this.playerMovementKeyMap[key];
     let [x, y] = this.player.position
@@ -74,44 +88,52 @@ export default class App {
       down: () => y++,
       right: () => x++
     }
-    if(direction === 'action') {
-      // If the user pressed the space bar then we use the current location instead of an updated direction
-      directionHandler[this.player.direction]()
-      const action = this.tools.selectedActionToExecute
-      const tile = this.map.getTile(x, y)
-      const actions = {
-        inventory: () => {
-          if (this.map.checkIfPlantable(x, y)) {
-            this.setCurrentTile(tile)
-            this.modal.generateSeedModal(this.inventory.getSeeds())
-            this.setView('seedSelection')
+    switch(direction) {
+      case 'action':
+        directionHandler[this.player.direction]()
+        const action = this.tools.selectedActionToExecute
+        const tile = this.map.getTile(x, y)
+        const actions = {
+          inventory: () => {
+            if (this.map.checkIfPlantable(x, y)) {
+              this.setCurrentTile(tile)
+              this.modal.generateSeedModal(this.inventory.getSeeds())
+              this.setView('seedSelection')
+            }
+          },
+          shovel: () => {
+            if (!tile.hasCrop) return;
+            if (!tile.isCropReadyToHarvest) return;
+            const harvestedCrop = tile.harvestCrop()
+            this.inventory.addCrop(harvestedCrop)
+            console.log(this.inventory)
+            this.map.removePlantedTile(tile)
+          },
+          'watering-can': () => {
+            if (!tile.hasCrop) return;
+            if (tile.isCropWatered || tile.isCropReadyToHarvest) return;
+            tile.waterCrop()
+          },
+          hoe: () => {
+            if (!tile.hasCrop) return;
+            this.map.removePlantedTile(tile)
           }
-        },
-        shovel: () => {
-          if(!tile.hasCrop) return;
-          if(!tile.isCropReadyToHarvest) return;
-          const harvestedCrop = tile.harvestCrop()
-          this.inventory.addCrop(harvestedCrop)
-          console.log(this.inventory)
-          this.map.removePlantedTile(tile)
-        },
-        'watering-can': () => {
-          if(!tile.hasCrop) return;
-          if(tile.isCropWatered || tile.isCropReadyToHarvest) return;
-          tile.waterCrop()
-        },
-        hoe: () => {
-          if (!tile.hasCrop) return;
-          this.map.removePlantedTile(tile)
         }
-      }
-      actions[action]()
-    } else {
-      this.player.updateDirection(direction)
-      directionHandler[direction]()
-      if (this.map.checkIfWalkable(x, y)) {
-        this.player.updatePosition(x, y)
-      }
+        actions[action]()
+      break;
+      case 'inventory':
+        // open inventory
+        const {crops, seeds} = this.inventory
+        this.modal.generateInventoryModal(crops, seeds)
+        this.setView('inventory')
+      break;
+      default:
+        this.player.updateDirection(direction)
+        directionHandler[direction]()
+        if (this.map.checkIfWalkable(x, y)) {
+          this.player.updatePosition(x, y)
+        }
+      break;
     }
   }
   plantSeed(type) {
