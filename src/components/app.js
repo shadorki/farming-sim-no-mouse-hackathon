@@ -84,6 +84,10 @@ export default class App {
   }
   plantSeed(type) {
     this.inventory.removeSeed(type)
+    this.currentTile.createCrop(type)
+    this.container.appendChild(this.currentTile.crop.domElement)
+    this.map.addPlantedTile(this.currentTile)
+    this.setCurrentTile(null)
   }
   handleToolNavigation(key) {
     const action = this.toolsNavigateKeyMap[key]

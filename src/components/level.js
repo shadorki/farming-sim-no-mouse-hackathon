@@ -1,8 +1,9 @@
-import Tile from "../models/tile"
+import Tile from "./tile"
 
 export default class Level {
   constructor() {
     this.tileMap = this.generateTileMap()
+    this.plantedTiles = []
   }
   generateTileMap() {
     const map = {}
@@ -37,6 +38,9 @@ export default class Level {
   }
   getTile(x, y) {
     return this.tileMap[`${x}/${y}`]
+  }
+  addPlantedTile(tile) {
+    this.plantedTiles.push(tile)
   }
   checkIfWalkable(x, y) {
     const tile = this.tileMap[`${x}/${y}`]
