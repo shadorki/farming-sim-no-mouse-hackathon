@@ -107,3 +107,10 @@ div.player {
 .tool.hoe {
   background-image: url('./assets/images/tools/hoe.png');
 }
+
+.crop {
+  height: 16px;
+  width: 16px;
+  background-image: url('./assets/images/crops/crops.png');
+  background-repeat: no-repeat;
+}
