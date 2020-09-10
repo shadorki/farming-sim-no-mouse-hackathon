@@ -4,6 +4,7 @@ import Tools from './tools'
 import Inventory from './inventory'
 import Modal from './modal'
 import Shop from './shop'
+import Wallet from './wallet'
 
 export default class App {
   constructor(container, modalContainer) {
@@ -16,6 +17,7 @@ export default class App {
     this.tools = new Tools()
     this.inventory = new Inventory()
     this.modal = new Modal(modalContainer)
+    this.wallet = new Wallet(100)
     this.view = 'map'
     this.currentTile = null
     this.playerMovementKeyMap = {
@@ -33,15 +35,27 @@ export default class App {
     this.seedSelectionKeyMap = {
       a: 'previous',
       d: 'next',
+      ArrowLeft: 'previous',
+      ArrowRight: 'next',
       Escape: 'close',
       ' ': 'select'
     }
     this.inventoryKeyMap = {
       a: 'previous',
       d: 'next',
+      ArrowLeft: 'previous',
+      ArrowRight: 'next',
       Escape: 'close',
       ' ': 'close',
       Enter: 'close',
+    }
+    this.shopKeyMap = {
+      a: 'previous',
+      d: 'next',
+      Tab: 'switch',
+      ' ': 'select',
+      Enter: 'select',
+      Escape: 'close'
     }
   }
   startGameLoop() {
@@ -169,7 +183,9 @@ export default class App {
     this.container.appendChild(this.player.domElement)
     this.container.appendChild(this.tools.domElement)
     this.container.appendChild(this.shop.domElement)
+    this.container.appendChild(this.wallet.domElement)
     this.shop.setPositionOnDom()
+    this.wallet.updateCashOnDom()
   }
   start() {
     this.setCallbacks()
