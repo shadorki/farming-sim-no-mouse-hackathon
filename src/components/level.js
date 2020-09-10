@@ -33,12 +33,19 @@ export default class Level {
       xAxis = 0
       yAxis++
     }
-
     return map
   }
-  checkIfWalkable(x, y, direction) {
+  getTile(x, y) {
+    return this.tileMap[`${x}/${y}`]
+  }
+  checkIfWalkable(x, y) {
     const tile = this.tileMap[`${x}/${y}`]
     if(!tile) return false;
     return tile.isWalkable
+  }
+  checkIfPlantable(x, y) {
+    const tile = this.tileMap[`${x}/${y}`]
+    if (!tile) return false;
+    return tile.isPlantable
   }
 }

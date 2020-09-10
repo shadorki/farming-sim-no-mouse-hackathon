@@ -8,7 +8,8 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgb(50, 50, 50)
+  background-color: rgb(50, 50, 50);
+  font-family: 'Press Start 2P', cursive;
 }
 
 #container {
@@ -108,9 +109,80 @@ div.player {
   background-image: url('./assets/images/tools/hoe.png');
 }
 
-.crop {
+.crop, .seed {
   height: 16px;
   width: 16px;
   background-image: url('./assets/images/crops/crops.png');
   background-repeat: no-repeat;
+  position: relative;
+}
+
+.seed.onion {
+  background-position: -80px 0px;
+}
+.seed.string-bean {
+  background-position: -80px -16px;
+}
+.seed.tomato {
+  background-position: -80px -32px;
+}
+.seed.plum {
+  background-position: -80px -48px;
+}
+.seed.pineapple {
+  background-position: -80px -64px;
+}
+.seed.strawberry {
+  background-position: -80px -96px;
+}
+.seed.potato {
+  background-position: -80px -112px;
+}
+.seed.pumpkin {
+  background-position: -80px -128px;
+}
+.seed.corn {
+  background-position: -80px -144px;
+}
+.seed > div {
+  position: absolute;
+  top: 1px;
+  right: 1px;
+  color: white;
+  font-size: 4px;
+}
+.modal-container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(50, 50, 50, 0.7);
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.modal{
+  height: 128px;
+  width: 128px;
+  background-image: url('./assets/images/ui/ui-block.png');
+  background-size: contain;
+  opacity: 0.8;
+}
+.modal-title {
+  font-size: .4rem;
+  margin: 12px;
+  text-align: center;
+}
+.modal-content {
+  margin: 6px auto;
+  width: 96px;
+  height: 80px;
+  background-color: rgb(80, 33, 0);
+}
+
+
+.hidden {
+  display: none;
 }

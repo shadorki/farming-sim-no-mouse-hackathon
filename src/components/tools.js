@@ -4,6 +4,9 @@ export default class Tools {
     this.tools = ['inventory', 'shovel', 'watering-can', 'hoe']
     this.domElement = this.createToolSet()
   }
+  get selectedActionToExecute () {
+    return this.tools[this.selectedToolIndex]
+  }
   createToolSet() {
     const toolContainer = document.createElement('div')
     toolContainer.className ='tools-container'
