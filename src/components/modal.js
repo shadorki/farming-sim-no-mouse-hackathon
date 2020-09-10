@@ -32,7 +32,7 @@ export default class Modal {
     this.plantSeed = cb
   }
   generateSeedModal(seeds) {
-    const [title, content] = this.modalContainer.children[0].children
+    const [title, subheading,content] = this.modalContainer.children[0].children
     title.innerHTML = ''
     content.innerHTML = ''
     title.textContent = 'Select a seed to plant'
@@ -48,6 +48,8 @@ export default class Modal {
     }
     seedElements[0].classList.add('selected')
     this.selectedSeed = seedElements[0]
+    const { type } = this.selectedSeed.dataset
+    subheading.textContent = type;
     this.elementsToNavigate = seedElements
     content.append(...seedElements)
     this.show()
@@ -80,6 +82,9 @@ export default class Modal {
     const currentSeed = this.elementsToNavigate[this.navigationPosition]
     currentSeed.classList.add('selected')
     this.selectedSeed = currentSeed
+    const { type } = this.selectedSeed.dataset
+    const [, subheading] = this.modalContainer.children[0].children
+    subheading.textContent = type;
   }
   selectSeed() {
     const { type } = this.selectedSeed.dataset

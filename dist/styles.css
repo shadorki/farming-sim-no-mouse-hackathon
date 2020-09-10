@@ -180,15 +180,18 @@ div.player {
   background-size: contain;
   opacity: 0.8;
 }
-.modal-title {
+.modal-title, .modal-subheading {
   font-size: .4rem;
   margin: 12px;
   text-align: center;
 }
+.modal-subheading {
+  font-size: .2rem;
+}
 .modal-content {
   margin: 6px auto;
   width: 96px;
-  height: 80px;
+  height: 56px;
   background-color: rgb(80, 33, 0);
   display: flex;
   flex-wrap: wrap;
