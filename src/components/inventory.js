@@ -9,8 +9,11 @@ export default class Inventory {
     this.generateStarterSeeds()
   }
   generateStarterSeeds() {
-    for(let i = 0; i < 10; i++) {
-      this.addSeed(new Seed('tomato'))
+    const seedTypes = ['onion', 'string-bean', 'tomato', 'plum', 'pineapple', 'strawberry', 'potato', 'pumpkin', 'corn']
+    for(let i = 0; i < seedTypes.length; i++) {
+      for(let j = 0; j < 10; j++) {
+        this.addSeed(new Seed(seedTypes[i]))
+      }
     }
   }
   addSeed(seed) {

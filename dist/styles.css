@@ -83,7 +83,7 @@ div.player {
   background-position: center;
   background-size: contain;
 }
-.tool-block.selected {
+.selected {
   border: 1px solid gold;
 }
 .tool-block:not(.selected) {
@@ -180,6 +180,9 @@ div.player {
   width: 96px;
   height: 80px;
   background-color: rgb(80, 33, 0);
+  display: flex;
+  flex-wrap: wrap;
+  padding: 6px 0;
 }
 
 

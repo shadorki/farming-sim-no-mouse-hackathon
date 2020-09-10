@@ -2,6 +2,7 @@ export default class Modal {
   constructor(modalContainer) {
     this.modalContainer = modalContainer
     this.elementsToNavigate = null
+    this.navigationPosition = 0
   }
   show() {
     this.modalContainer.classList.remove('hidden')
@@ -10,6 +11,8 @@ export default class Modal {
     if(this.modalContainer.classList.contains('hidden')) {
       this.modalContainer.classList.add('hidden')
     }
+    this.elementsToNavigate = null
+    this.navigationPosition = 0
   }
   generateSeedModal(seeds) {
     const [title, content] = this.modalContainer.children[0].children
@@ -25,7 +28,34 @@ export default class Modal {
       seedElement.appendChild(seedCounter)
       seedElements.push(seedElement)
     }
+    seedElements[0].classList.add('selected')
+    this.elementsToNavigate = seedElements
     content.append(...seedElements)
     this.show()
+  }
+  navigateSeedModal(action) {
+    if(this.elementsToNavigate === null) return;
+    const actions = {
+      previous: () => {
+        if (!this.navigationPosition) {
+          this.navigationPosition = this.elementsToNavigate.length - 1
+        } else {
+          this.navigationPosition--
+        }
+      },
+      next: () => {
+        if (this.navigationPosition === this.elementsToNavigate.length - 1) {
+          this.navigationPosition = 0
+        } else {
+          this.navigationPosition++
+        }
+      }
+    }
+    actions[action]()
+    for (let i = 0; i < this.elementsToNavigate.length; i++) {
+      this.elementsToNavigate[i].classList.remove('selected')
+    }
+    const currentSeed = this.elementsToNavigate[this.navigationPosition]
+    currentSeed.classList.add('selected')
   }
 }

@@ -26,14 +26,18 @@ export default class App {
       ArrowRight: 'next'
     }
     this.seedSelectionKeyMap = {
-      ArrowLeft: 'left',
-      ArrowRight: 'right',
-      ArrowUp: 'up',
-      ArrowDown: 'down'
+      ArrowLeft: 'previous',
+      ArrowRight: 'next',
+      Escape: 'close',
+      Enter: 'select'
     }
+  }
+  setView(view) {
+    this.view = view
   }
   handleKeyPress(e) {
     const { key } = e
+    console.log(key)
     const views = {
       map: () => this.handleMapViewKeyPress(key),
       seedSelection: () => this.handleSeedSelectionKeyPress(key)
@@ -50,6 +54,7 @@ export default class App {
   handleSeedSelectionKeyPress(key) {
     const action = this.seedSelectionKeyMap[key]
     if(!action) return;
+    this.modal.navigateSeedModal(action)
   }
   handlePlayerMovement(key) {
     const direction = this.playerMovementKeyMap[key];
@@ -67,6 +72,7 @@ export default class App {
         const tile = this.map.getTile(x, y)
         this.setCurrentTile(tile)
         this.modal.generateSeedModal(this.inventory.getSeeds())
+        this.setView('seedSelection')
       }
     } else {
       this.player.updateDirection(direction)
