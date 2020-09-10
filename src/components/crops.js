@@ -5,6 +5,7 @@ export default class Crop {
     this.y = y
     this.timeStamp = timeStamp
     this.isWatered = false
+    this.isReadyToHarvest = false
     this.growthCycle = null
     this.age = 0
     this.currentStage = 0;
@@ -18,7 +19,7 @@ export default class Crop {
     this.domElement.appendChild(cropElement)
     const veggieTable = { // lol
       onion: {
-        growthCycle: 15,
+        growthCycle: 5,
         stages: [
           ['-80px', '0px'],
           ['-62px', '0px'],
@@ -114,7 +115,23 @@ export default class Crop {
     cropElement.style.backgroundPosition = backgroundCoords.join(' ')
   }
   grow() {
+    if(!this.isWatered || this.isReadyToHarvest) return;
     this.age++
+    if(this.age > this.growthCycle) {
+      this.growToNextStage()
+    }
+  }
+  growToNextStage() {
+    this.currentStage++
+    if(this.currentStage === this.stages.length) {
+      this.isReadyToHarvest = true
+    } else {
+      const backgroundCoords = this.stages[this.currentStage]
+      this.domElement.firstElementChild.style.backgroundPosition = backgroundCoords.join(' ')
+    }
+    this.isWatered = false
+    this.domElement.firstElementChild.classList.remove('watered')
+    this.age = 0
   }
   water() {
     this.isWatered = true

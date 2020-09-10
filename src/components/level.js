@@ -1,4 +1,5 @@
 import Tile from "./tile"
+import Crop from "./crops"
 
 export default class Level {
   constructor() {
@@ -35,6 +36,12 @@ export default class Level {
       yAxis++
     }
     return map
+  }
+  ageCrops() {
+    if (!this.plantedTiles.length) return;
+    console.log('Aging..')
+    console.log(this.plantedTiles)
+    this.plantedTiles.forEach(tile => tile.crop.grow())
   }
   getTile(x, y) {
     return this.tileMap[`${x}/${y}`]

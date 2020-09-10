@@ -8,8 +8,8 @@ export default class Tile {
     this.isWalkable = isWalkable
     this.crop = null
   }
-  createCrop(type) {
+  createCrop(type, timeStamp) {
     this.isPlantable = false
-    this.crop = new Crop(type, null, this.x, this.y)
+    this.crop = new Crop(type, timeStamp, this.x, this.y)
   }
 }

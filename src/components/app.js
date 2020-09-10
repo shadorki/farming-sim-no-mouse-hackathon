@@ -7,6 +7,8 @@ import Modal from './modal'
 export default class App {
   constructor(container, modalContainer) {
     this.container = container
+    this.time = 0;
+    this.gameLoopIntervalId = null;
     this.map = new Level()
     this.player = new Player(19, 5, 'down')
     this.tools = new Tools()
@@ -31,6 +33,13 @@ export default class App {
       Escape: 'close',
       Enter: 'select'
     }
+  }
+  startGameLoop() {
+    this.gameLoopIntervalId = setInterval(this.gameLoop.bind(this), 1000)
+  }
+  gameLoop() {
+    this.time++
+    this.map.ageCrops()
   }
   setView(view) {
     this.view = view
@@ -81,7 +90,7 @@ export default class App {
         shovel: () => {},
         'watering-can': () => {
           if(tile.crop === null) return;
-          if(tile.crop.isWatered) return;
+          if(tile.crop.isWatered || tile.crop.isReadyToHarvest) return;
           tile.crop.water()
         },
         hoe: () => {}
@@ -97,7 +106,7 @@ export default class App {
   }
   plantSeed(type) {
     this.inventory.removeSeed(type)
-    this.currentTile.createCrop(type)
+    this.currentTile.createCrop(type, this.time)
     this.container.appendChild(this.currentTile.crop.domElement)
     this.map.addPlantedTile(this.currentTile)
     this.setCurrentTile(null)
@@ -126,6 +135,7 @@ export default class App {
     this.setCallbacks()
     this.setupDomElements()
     this.setListeners()
+    this.startGameLoop()
     console.log(this.map.tileMap)
   }
 }
