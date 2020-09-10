@@ -28,10 +28,10 @@ export default class App {
       ArrowRight: 'next'
     }
     this.seedSelectionKeyMap = {
-      ArrowLeft: 'previous',
-      ArrowRight: 'next',
+      a: 'previous',
+      d: 'next',
       Escape: 'close',
-      Enter: 'select'
+      ' ': 'select'
     }
   }
   startGameLoop() {
@@ -87,7 +87,14 @@ export default class App {
             this.setView('seedSelection')
           }
         },
-        shovel: () => {},
+        shovel: () => {
+          if(!tile.hasCrop) return;
+          if(!tile.isCropReadyToHarvest) return;
+          const harvestedCrop = tile.harvestCrop()
+          this.inventory.addCrop(harvestedCrop)
+          console.log(this.inventory)
+          this.map.removePlantedTile(tile)
+        },
         'watering-can': () => {
           if(!tile.hasCrop) return;
           if(tile.isCropWatered || tile.isCropReadyToHarvest) return;

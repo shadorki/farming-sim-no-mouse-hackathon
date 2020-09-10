@@ -1,3 +1,5 @@
+import HarvestedCrop from './harvested-crop'
+
 export default class Crop {
   constructor(type, timeStamp, x, y) {
     this.type = type
@@ -26,7 +28,8 @@ export default class Crop {
           ['-46px', '0px'],
           ['-32px', '0px'],
           ['-16px', '0px'],
-        ]
+        ],
+        worth: 5
       },
       'string-bean': {
         growthCycle: 30,
@@ -36,7 +39,8 @@ export default class Crop {
           ['-46px', '-16px'],
           ['-32px', '-16px'],
           ['-16px', '-16px'],
-        ]
+        ],
+        worth: 10,
       },
       tomato: {
         growthCycle: 45,
@@ -46,7 +50,8 @@ export default class Crop {
           ['-46px', '-32px'],
           ['-32px', '-32px'],
           ['-16px', '-32px'],
-        ]
+        ],
+        worth: 15
       },
       plum: {
         growthCycle: 60,
@@ -56,7 +61,8 @@ export default class Crop {
           ['-46px', '-48px'],
           ['-32px', '-48px'],
           ['-16px', '-48px'],
-        ]
+        ],
+        worth: 20,
       },
       pineapple: {
         growthCycle: 75,
@@ -66,7 +72,8 @@ export default class Crop {
           ['-46px', '-64px'],
           ['-32px', '-64px'],
           ['-16px', '-64px'],
-        ]
+        ],
+        worth: 25,
       },
       strawberry: {
         growthCycle: 90,
@@ -76,7 +83,8 @@ export default class Crop {
           ['-46px', '-96px'],
           ['-32px', '-96px'],
           ['-16px', '-96px'],
-        ]
+        ],
+        worth: 30,
       },
       potato: {
         growthCycle: 105,
@@ -86,7 +94,8 @@ export default class Crop {
           ['-46px', '-112px'],
           ['-32px', '-112px'],
           ['-16px', '-112px'],
-        ]
+        ],
+        worth: 35,
       },
       pumpkin: {
         growthCycle: 120,
@@ -96,7 +105,8 @@ export default class Crop {
           ['-46px', '-128px'],
           ['-32px', '-128px'],
           ['-16px', '-128px'],
-        ]
+        ],
+        worth: 40,
       },
       corn: {
         growthCycle: 135,
@@ -106,11 +116,13 @@ export default class Crop {
           ['-46px', '-144px'],
           ['-32px', '-144px'],
           ['-16px', '-144px'],
-        ]
+        ],
+        worth: 45,
       },
     }
     this.stages = veggieTable[type].stages
     this.growthCycle = veggieTable[type].growthCycle
+    this.worth = veggieTable[type].worth
     const backgroundCoords = this.stages[this.currentStage]
     cropElement.style.backgroundPosition = backgroundCoords.join(' ')
   }
@@ -139,5 +151,12 @@ export default class Crop {
   }
   kill() {
     this.domElement.remove()
+  }
+  harvest() {
+    return new HarvestedCrop(
+      this.type,
+      ['0px', this.stages[0][1]],
+      this.worth
+    )
   }
 }

@@ -1,11 +1,8 @@
 import Seed from './seed'
-
 export default class Inventory {
   constructor() {
-    this.inventory = {
-      seeds: {},
-      crops: {}
-    }
+    this.seeds = {}
+    this.crops = {}
     this.generateStarterSeeds()
   }
   generateStarterSeeds() {
@@ -17,33 +14,29 @@ export default class Inventory {
     }
   }
   addSeed(seed) {
-    const seedList = this.inventory.seeds[seed.type]
+    const seedList = this.seeds[seed.type]
     if(seedList) {
       seedList.push(seed)
     } else {
-      this.inventory.seeds[seed.type] = [seed]
+      this.seeds[seed.type] = [seed]
     }
   }
   removeSeed(type) {
-    const seedList = this.inventory.seeds[type]
+    const seedList = this.seeds[type]
     if(!seedList) return;
     seedList.pop()
     if(!seedList.length) {
-      delete this.inventory.seeds[type]
+      delete this.seeds[type]
     }
   }
   addCrop(crop) {
-    const cropList = this.inventory.crops[crop.type]
-    if (cropList) {
-      cropList.push(crop)
-    } else {
-      this.inventory.crops[crop.type] = [crop]
-    }
+    this.crops[crop.type] = this.crops[crop.type] || []
+    this.crops[crop.type].push(crop)
   }
   getSeeds() {
-    return this.inventory.seeds
+    return this.seeds
   }
   getCrops() {
-    return this.inventory.crops
+    return this.crops
   }
 }

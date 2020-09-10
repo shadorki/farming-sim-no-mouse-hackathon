@@ -29,4 +29,7 @@ export default class Tile {
     this.crop = null
     this.isPlantable = true
   }
+  harvestCrop() {
+    return this.crop.harvest()
+  }
 }
