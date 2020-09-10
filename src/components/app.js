@@ -89,6 +89,10 @@ export default class App {
   setCurrentTile(tile) {
     this.currentTile = tile
   }
+  setCallbacks() {
+    this.modal.setViewCb(this.setView.bind(this))
+    this.modal.setCurrentTileCb(this.setCurrentTile.bind(this))
+  }
   setListeners() {
     window.addEventListener('keydown', this.handleKeyPress.bind(this))
     this.player.setListeners()
@@ -98,6 +102,7 @@ export default class App {
     this.container.appendChild(this.tools.domElement)
   }
   start() {
+    this.setCallbacks()
     this.setupDomElements()
     this.setListeners()
     console.log(this.map.tileMap)
