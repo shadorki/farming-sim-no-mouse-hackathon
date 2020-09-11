@@ -13,7 +13,7 @@ module.exports = {
   "module": {
     "rules": [
       {
-        test: /\.(png|jpe?g|gif)$/i,
+        test: /\.(png|jpe?g|gif|ogg|mp3|wav|mpe?g)$/i,
         use: [
           {
             loader: 'file-loader',

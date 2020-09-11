@@ -6,6 +6,7 @@ import Modal from './modal'
 import Shop from './shop'
 import Wallet from './wallet'
 import Crop from './crops'
+import Sound from './sound'
 
 export default class App {
   constructor(container, modalContainer) {
@@ -19,6 +20,9 @@ export default class App {
     this.inventory = new Inventory()
     this.modal = new Modal(modalContainer)
     this.wallet = new Wallet(10000)
+    this.sound = new Sound()
+    this.isMuted = true
+    console.log(this.sound)
     this.view = 'map'
     this.currentTile = null
     this.playerMovementKeyMap = {
@@ -27,7 +31,8 @@ export default class App {
       s: 'down',
       d: 'right',
       ' ': 'action',
-      i: 'inventory'
+      i: 'inventory',
+      m: 'audio'
     }
     this.toolsNavigateKeyMap = {
       ArrowLeft: 'previous',
@@ -73,6 +78,11 @@ export default class App {
     const { key } = e
     e.preventDefault()
     console.log(key)
+    // ugly random if statement because i want to be able to mute from anywhere
+    if(key === 'm') {
+      this.sound.muteRequest()
+      return
+    }
     const views = {
       map: () => this.handleMapViewKeyPress(key),
       seedSelection: () => this.handleSeedSelectionKeyPress(key),
@@ -211,6 +221,7 @@ export default class App {
     this.container.appendChild(this.tools.domElement)
     this.container.appendChild(this.shop.domElement)
     this.container.appendChild(this.wallet.domElement)
+    this.container.appendChild(this.sound.domElement)
     this.shop.setPositionOnDom()
     this.wallet.updateCashOnDom()
   }

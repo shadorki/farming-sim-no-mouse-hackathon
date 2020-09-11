@@ -233,6 +233,21 @@ div.player {
   background-size: contain;
   background-repeat: no-repeat;
 }
+.mute-button {
+  position: absolute;
+  height: 16px;
+  width: 16px;
+  top: 1px;
+  left: 1px;
+  background-color: rgba(50, 50, 50, 0.7);
+  border-radius: 4px;
+  opacity: 0.8;
+  background-image: url('./assets/images/ui/sound.png');
+  background-position: -1px 0px;
+}
+.not-muted {
+  background-position: -1px 17px;
+}
 
 
 .hidden {
