@@ -59,10 +59,15 @@ export default class Modal {
       seedElement.appendChild(seedCounter)
       seedElements.push(seedElement)
     }
-    seedElements[0].classList.add('selected')
-    this.selected = seedElements[0]
-    const { type } = this.selected.dataset
-    subheading.textContent = type;
+    if(seedElements.length) {
+      seedElements[0].classList.add('selected')
+      this.selected = seedElements[0]
+      const { type } = this.selected.dataset
+      subheading.textContent = type;
+    } else {
+      this.selected = null
+      subheading.textContent = 'No more seeds!'
+    }
     this.elementsToNavigate = seedElements
     content.append(...seedElements)
     this.show()
@@ -93,10 +98,15 @@ export default class Modal {
       seedElement.appendChild(seedCounter)
       elements.push(seedElement)
     }
-    elements[0].classList.add('selected')
-    this.selected = elements[0]
-    const { type } = this.selected.dataset
-    subheading.textContent = type;
+    if(elements.length) {
+      elements[0].classList.add('selected')
+      this.selected = elements[0]
+      const { type } = this.selected.dataset
+      subheading.textContent = type;
+    } else {
+      this.selected = null
+      subheading.textContent = 'No more items!'
+    }
     this.elementsToNavigate = elements
     content.append(...elements)
     this.show()
@@ -269,6 +279,7 @@ export default class Modal {
     }
   }
   selectSeed() {
+    if(!this.selected) return;
     const { type } = this.selected.dataset
     if (!this.modalContainer.classList.contains('hidden')) {
       this.modalContainer.classList.add('hidden')
