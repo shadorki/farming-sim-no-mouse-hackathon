@@ -21,8 +21,6 @@ export default class App {
     this.modal = new Modal(modalContainer)
     this.wallet = new Wallet(10000)
     this.sound = new Sound()
-    this.isMuted = true
-    console.log(this.sound)
     this.view = 'map'
     this.currentTile = null
     this.playerMovementKeyMap = {
@@ -74,10 +72,12 @@ export default class App {
   setView(view) {
     this.view = view
   }
+  playSound(sound) {
+    this.sound.playSound(sound)
+  }
   handleKeyPress(e) {
     const { key } = e
     e.preventDefault()
-    console.log(key)
     // ugly random if statement because i want to be able to mute from anywhere
     if(key === 'm') {
       this.sound.muteRequest()
@@ -130,11 +130,13 @@ export default class App {
         if(tile.isShop) {
           this.modal.generateShopModal(this.inventory.getCrops(), this.shop.shopInventory.getSeeds())
           this.setView('shop')
+          this.playSound('openInventory')
         } else {
           const actions = {
             inventory: () => {
               if (this.map.checkIfPlantable(x, y)) {
                 this.setCurrentTile(tile)
+                this.playSound('openInventory')
                 this.modal.generateSeedModal(this.inventory.getSeeds())
                 this.setView('seedSelection')
               }
@@ -144,17 +146,19 @@ export default class App {
               if (!tile.isCropReadyToHarvest) return;
               const harvestedCrop = tile.harvestCrop()
               this.inventory.addCrop(harvestedCrop)
-              console.log(this.inventory)
               this.map.removePlantedTile(tile)
+              this.playSound('tool')
             },
             'watering-can': () => {
               if (!tile.hasCrop) return;
               if (tile.isCropWatered || tile.isCropReadyToHarvest) return;
               tile.waterCrop()
+              this.playSound('water')
             },
             hoe: () => {
               if (!tile.hasCrop) return;
               this.map.removePlantedTile(tile)
+              this.playSound('tool')
             }
           }
           actions[action]()
@@ -164,6 +168,7 @@ export default class App {
         // open inventory
         const {crops, seeds} = this.inventory
         this.modal.generateInventoryModal(crops, seeds)
+        this.playSound('openInventory')
         this.setView('inventory')
       break;
       default:
@@ -181,6 +186,7 @@ export default class App {
     this.container.appendChild(this.currentTile.crop.domElement)
     this.map.addPlantedTile(this.currentTile)
     this.setCurrentTile(null)
+    this.playSound('plant')
   }
   purchaseSeed(type, price) {
     this.wallet.spendCash(price)
@@ -188,6 +194,7 @@ export default class App {
     this.inventory.addSeed(seed)
     this.wallet.updateCashOnDom()
     this.modal.resyncShopItemsAfterPurchase()
+    this.playSound('money')
   }
   sellCrop(type, price) {
     this.wallet.earnCash(price)
@@ -195,7 +202,7 @@ export default class App {
     this.shop.buyCrop(crop)
     this.wallet.updateCashOnDom()
     this.modal.resyncShopItemsAfterPurchase()
-    console.log(this.modal)
+    this.playSound('money')
   }
   handleToolNavigation(key) {
     const action = this.toolsNavigateKeyMap[key]
@@ -205,6 +212,7 @@ export default class App {
     this.currentTile = tile
   }
   setCallbacks() {
+    this.player.playSoundCb(this.playSound.bind(this))
     this.modal.setViewCb(this.setView.bind(this))
     this.modal.setCurrentTileCb(this.setCurrentTile.bind(this))
     this.modal.setPlantSeedCb(this.plantSeed.bind(this))
@@ -232,6 +240,5 @@ export default class App {
     this.map.setShop(18, 0)
     this.setListeners()
     this.startGameLoop()
-    console.log(this.map.tileMap)
   }
 }

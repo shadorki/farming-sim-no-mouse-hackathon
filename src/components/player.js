@@ -6,9 +6,14 @@ export default class Player {
     this.domElement = document.createElement('div')
     this.domElement.className = `player ${this.direction}`
     this.updatePositionOnDom()
+    this.playSound = null
+  }
+  playSoundCb(cb) {
+    this.playSound = cb
   }
   setListeners() {
     this.domElement.addEventListener('transitionstart', () => {
+      this.playSound('step')
       if(this.domElement.classList.contains('walking')) return;
       this.domElement.classList.add('walking')
     })

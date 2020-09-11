@@ -16,7 +16,6 @@ export default class Modal {
     this.modalContainer.classList.remove('hidden')
   }
   hide() {
-    console.log('hit')
     if(!this.modalContainer.classList.contains('hidden')) {
       this.modalContainer.classList.add('hidden')
     }
@@ -111,7 +110,6 @@ export default class Modal {
     title.textContent = this.shopView
     const userElements = []
     const shopElements = []
-    console.log(userCrops)
     for (const crop in userCrops) {
       const cropElement = document.createElement('div')
       cropElement.className = `crop ${crop}`
@@ -143,7 +141,6 @@ export default class Modal {
       Buy: shopElements,
       Sell: userElements
     }
-    console.log(this.elementsToNavigate)
     if(this.elementsToNavigate[this.shopView].length) {
       this.elementsToNavigate[this.shopView][0].classList.add('selected')
       this.selected = this.elementsToNavigate[this.shopView][0]
@@ -213,7 +210,6 @@ export default class Modal {
         }
         let { type, price } = this.selected.dataset
         price = parseInt(price)
-        console.log(price)
         if (this.shopView === 'Buy') {
           if (this.isBalanceSufficient(price)) {
               this.purchaseSeed(type, price)
@@ -234,7 +230,6 @@ export default class Modal {
       }
     }
     actions[action]()
-    console.log(this.elementsToNavigate)
     if (action === 'close' || action === 'select') return;
     const selectedElementsToNavigate = this.elementsToNavigate[this.shopView]
     for (let i = 0; i < selectedElementsToNavigate.length; i++) {

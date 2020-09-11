@@ -5,7 +5,6 @@ export default class Wallet {
     this.cash = startingCash || 0
   }
   isBalanceSufficient(amount) {
-    console.log(this)
     return this.cash >= amount
   }
   spendCash(amount) {

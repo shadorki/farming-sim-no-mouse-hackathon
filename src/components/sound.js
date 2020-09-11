@@ -24,7 +24,7 @@ export default class Sound {
   }
   muteRequest() {
     this.isMuted = !this.isMuted
-    if(this.isMuted) {
+    if(!this.isMuted) {
       this.setPlay()
     } else {
       this.stopPlay()
@@ -33,7 +33,7 @@ export default class Sound {
   }
   setPlay() {
     for (const key in this.sounds) {
-      this.sounds[key].volume = 0.5
+      this.sounds[key].volume = 0.3
     }
   }
   stopPlay() {
@@ -42,7 +42,7 @@ export default class Sound {
     }
   }
   playSound(sound) {
-    if(!this.isMuted) return;
+    if(this.isMuted) return;
     this.sounds[sound].play()
   }
   updateMuteElement() {
