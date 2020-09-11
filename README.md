@@ -1,6 +1,6 @@
 # Farming Sim
 
-A vanilla JS web application to simulates farming, built in 48 hours for the Mint Bean No Mouse Hackathon.
+A vanilla JS web application to simulate farming, built in 48 hours for the [Mintbean](https://www.mintbean.io/) No Mouse Hackathon.
 
 ## Technologies Used
 - Vanilla JavaScript
@@ -13,12 +13,12 @@ Play the live demo [here.](https://farming-sim.uzairashraf.dev)
 
 ## How to Play
 
-The Farming Sim application does not use the mouse.  Only uses arrow keys.
+The Farming Sim application does not use the mouse.  Only uses the keyboard.
 
 ### Basics
 
 - WASD - Move your character around
-- M - Unmute/Mute sound effectsd
+- M - Unmute/Mute sound effects
 - I - Inventory
 - ESC - Exit modals
 - SPACE - Use your tools or interact with the shop
@@ -102,3 +102,11 @@ Its currently 2AM on a Thursday night.  I haven't left my chair in a long time a
 Many of the assets in the game were taken from sites like OpenGameArt and SpritesResource.  I will add the credentials to the creators of the assets.
 
 Thanks for reading and playing!
+
+## Credits
+
+  - [Main Character Sprites](https://arcadeisland.itch.io/top-down-rpg-characters)
+  - [Crop Sprites](https://opengameart.org/content/farming-crops-16x16)
+  - [UI Blocks and Map Tile Set](https://opengameart.org/content/lpc-farming-tilesets-magic-animations-and-ui-elements)
+  - [Shop Stall from Stardew Valley](https://www.spriters-resource.com/pc_computer/stardewvalley/sheet/88590/)
+  - [Tools](https://jordizzle.itch.io/farming-game-asset-pack-1)
