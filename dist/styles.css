@@ -188,7 +188,7 @@ div.player {
   right: initial;
   color: gold;
 }
-.modal-container {
+.modal-container, .intro-modal-container {
   position: absolute;
   top: 0;
   bottom: 0;
@@ -206,6 +206,20 @@ div.player {
   background-image: url('./assets/images/ui/ui-block.png');
   background-size: contain;
   opacity: 0.8;
+}
+.intro-modal {
+  height: 220px;
+  width: 220px;
+  background-image: url('./assets/images/ui/scroll.png');
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.8;
+  font-size: .7rem;
+  text-align: center;
+}
+.intro-modal > div {
+  margin: 20px 0 0 13px;
 }
 .modal-title, .modal-subheading {
   font-size: .4rem;
