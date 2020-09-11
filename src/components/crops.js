@@ -21,7 +21,7 @@ export default class Crop {
     this.domElement.appendChild(cropElement)
     const veggieTable = { // lol
       onion: {
-        growthCycle: 5,
+        growthCycle: 1,
         stages: [
           ['-80px', '0px'],
           ['-62px', '0px'],
@@ -32,7 +32,7 @@ export default class Crop {
         worth: 5
       },
       'string-bean': {
-        growthCycle: 30,
+        growthCycle: 1,
         stages: [
           ['-80px', '-16px'],
           ['-62px', '-16px'],

@@ -70,6 +70,7 @@ export default class App {
   }
   handleKeyPress(e) {
     const { key } = e
+    e.preventDefault()
     console.log(key)
     const views = {
       map: () => this.handleMapViewKeyPress(key),

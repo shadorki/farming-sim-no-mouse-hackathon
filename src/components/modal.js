@@ -103,7 +103,7 @@ export default class Modal {
       const cropElement = document.createElement('div')
       cropElement.className = `crop ${crop}`
       cropElement.style.backgroundPosition = userCrops[crop][0].backgroundCoords.join(' ')
-      cropElement.setAttribute('data-type', type)
+      cropElement.setAttribute('data-type', crop)
       const cropPrice = document.createElement('div')
       cropPrice.className = 'price'
       cropPrice.textContent = userCrops[crop][0].worth
@@ -169,7 +169,51 @@ export default class Modal {
     subheading.textContent = type;
   }
   navigateShopModal(action) {
-
+    if (this.elementsToNavigate === null) return;
+    const [title, subheading, content] = this.modalContainer.children[0].children
+    const actions = {
+      previous: () => {
+        if (!this.navigationPosition) {
+          this.navigationPosition = this.elementsToNavigate[this.shopView].length - 1
+        } else {
+          this.navigationPosition--
+        }
+      },
+      next: () => {
+        if (this.navigationPosition === this.elementsToNavigate[this.shopView].length - 1) {
+          this.navigationPosition = 0
+        } else {
+          this.navigationPosition++
+        }
+      },
+      close: this.hide.bind(this),
+      select: () => {},
+      switch: () => {
+        this.navigationPosition = 0
+        this.shopView = this.shopView === 'Buy' ? 'Sell' : 'Buy'
+        title.textContent = this.shopView
+        const switchedElements = this.elementsToNavigate[this.shopView]
+        content.innerHTML = ''
+        content.append(...switchedElements)
+      }
+    }
+    actions[action]()
+    console.log(this.elementsToNavigate)
+    if (action === 'close' || action === 'select') return;
+    const selectedElementsToNavigate = this.elementsToNavigate[this.shopView]
+    for (let i = 0; i < selectedElementsToNavigate.length; i++) {
+      selectedElementsToNavigate[i].classList.remove('selected')
+    }
+    const currentSeedOrCrop = selectedElementsToNavigate[this.navigationPosition]
+    if(!currentSeedOrCrop) {
+      subheading.textContent = 'Empty Inventory';
+      this.selected = null
+    } else {
+      currentSeedOrCrop.classList.add('selected')
+      this.selected = currentSeedOrCrop
+      const { type } = this.selected.dataset
+      subheading.textContent = type;
+    }
   }
   selectSeed() {
     const { type } = this.selected.dataset
