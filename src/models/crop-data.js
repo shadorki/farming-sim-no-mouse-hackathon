@@ -1,6 +1,6 @@
 const veggieTable = { // lol
   onion: {
-    growthCycle: 1,
+    growthCycle: 5,
     stages: [
       ['-80px', '0px'],
       ['-62px', '0px'],
@@ -11,7 +11,7 @@ const veggieTable = { // lol
     worth: 5
   },
   'string-bean': {
-    growthCycle: 1,
+    growthCycle: 10,
     stages: [
       ['-80px', '-16px'],
       ['-62px', '-16px'],
@@ -22,7 +22,7 @@ const veggieTable = { // lol
     worth: 10,
   },
   tomato: {
-    growthCycle: 45,
+    growthCycle: 15,
     stages: [
       ['-80px', '-32px'],
       ['-62px', '-32px'],
@@ -33,7 +33,7 @@ const veggieTable = { // lol
     worth: 15
   },
   plum: {
-    growthCycle: 60,
+    growthCycle: 20,
     stages: [
       ['-80px', '-48px'],
       ['-62px', '-48px'],
@@ -44,7 +44,7 @@ const veggieTable = { // lol
     worth: 20,
   },
   pineapple: {
-    growthCycle: 75,
+    growthCycle: 25,
     stages: [
       ['-80px', '-64px'],
       ['-62px', '-64px'],
@@ -55,7 +55,7 @@ const veggieTable = { // lol
     worth: 25,
   },
   strawberry: {
-    growthCycle: 90,
+    growthCycle: 30,
     stages: [
       ['-80px', '-96px'],
       ['-62px', '-96px'],
@@ -66,7 +66,7 @@ const veggieTable = { // lol
     worth: 30,
   },
   potato: {
-    growthCycle: 105,
+    growthCycle: 35,
     stages: [
       ['-80px', '-112px'],
       ['-62px', '-112px'],
@@ -77,7 +77,7 @@ const veggieTable = { // lol
     worth: 35,
   },
   pumpkin: {
-    growthCycle: 120,
+    growthCycle: 40,
     stages: [
       ['-80px', '-128px'],
       ['-62px', '-128px'],
@@ -88,7 +88,7 @@ const veggieTable = { // lol
     worth: 40,
   },
   corn: {
-    growthCycle: 135,
+    growthCycle: 45,
     stages: [
       ['-80px', '-144px'],
       ['-62px', '-144px'],

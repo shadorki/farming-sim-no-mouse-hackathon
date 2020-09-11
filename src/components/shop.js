@@ -7,7 +7,7 @@ export default class Shop {
     this.shopInventory = new Inventory()
     this.domElement = document.createElement('div')
     this.domElement.className = 'shop'
-    this.shopInventory.generateStarterSeeds(3)
+    this.shopInventory.generateStarterSeeds(99)
   }
   setPositionOnDom() {
     this.domElement.style.left = this.x * 16 + 'px'

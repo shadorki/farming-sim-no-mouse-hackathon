@@ -7,9 +7,10 @@ import Shop from './shop'
 import Wallet from './wallet'
 import Crop from './crops'
 import Sound from './sound'
+import Tutorial from './tutorial'
 
 export default class App {
-  constructor(container, modalContainer) {
+  constructor(container, modalContainer, introModalContainer) {
     this.container = container
     this.time = 0;
     this.gameLoopIntervalId = null;
@@ -19,10 +20,17 @@ export default class App {
     this.tools = new Tools()
     this.inventory = new Inventory()
     this.modal = new Modal(modalContainer)
-    this.wallet = new Wallet(10000)
+    this.wallet = new Wallet(5)
     this.sound = new Sound()
-    this.view = 'map'
+    this.tutorial = new Tutorial(introModalContainer)
+    this.view = 'tutorial'
     this.currentTile = null
+    this.tutorialKeyMap = {
+      ArrowLeft: 'left',
+      ArrowRight: 'right',
+      g: 'github',
+      Escape: 'close'
+    }
     this.playerMovementKeyMap = {
       w: 'up',
       a: 'left',
@@ -87,7 +95,8 @@ export default class App {
       map: () => this.handleMapViewKeyPress(key),
       seedSelection: () => this.handleSeedSelectionKeyPress(key),
       inventory: () => this.handleInventorySelectionKeyPress(key),
-      shop: () => this.handleShopSelectionKeyPress(key)
+      shop: () => this.handleShopSelectionKeyPress(key),
+      tutorial: () => this.handleTutorialNavigationKeyPress(key)
     }
     views[this.view]()
   }
@@ -112,6 +121,11 @@ export default class App {
     const action = this.shopKeyMap[key]
     if (!action) return;
     this.modal.navigateShopModal(action)
+  }
+  handleTutorialNavigationKeyPress(key) {
+    const action = this.tutorialKeyMap[key]
+    if (!action) return;
+    this.tutorial.navigateTutorial(action)
   }
   handlePlayerMovement(key) {
     const direction = this.playerMovementKeyMap[key];
@@ -212,6 +226,7 @@ export default class App {
     this.currentTile = tile
   }
   setCallbacks() {
+    this.tutorial.setViewCb(this.setView.bind(this))
     this.player.playSoundCb(this.playSound.bind(this))
     this.modal.setViewCb(this.setView.bind(this))
     this.modal.setCurrentTileCb(this.setCurrentTile.bind(this))
@@ -236,9 +251,10 @@ export default class App {
   start() {
     this.setCallbacks()
     this.setupDomElements()
-    this.inventory.generateStarterSeeds(3)
+    this.inventory.generatePlayerSeeds()
     this.map.setShop(18, 0)
     this.setListeners()
     this.startGameLoop()
+    this.tutorial.show()
   }
 }

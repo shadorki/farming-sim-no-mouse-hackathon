@@ -12,6 +12,11 @@ export default class Inventory {
       }
     }
   }
+  generatePlayerSeeds() {
+    for(let i = 0; i < 3; i++) {
+      this.addSeed(new Seed('onion'))
+    }
+  }
   addSeed(seed) {
     const seedList = this.seeds[seed.type]
     if(seedList) {
