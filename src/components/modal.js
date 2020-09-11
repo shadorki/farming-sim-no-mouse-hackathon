@@ -8,6 +8,8 @@ export default class Modal {
     this.selected = null
     this.plantSeed = null
     this.shopView = null
+    this.isBalanceSufficient = null
+    this.purchaseSeed = null
   }
   show() {
     this.modalContainer.classList.remove('hidden')
@@ -31,6 +33,12 @@ export default class Modal {
   }
   setPlantSeedCb(cb) {
     this.plantSeed = cb
+  }
+  setCheckWalletBalanceCb(cb) {
+    this.isBalanceSufficient = cb
+  }
+  setPurchaseSeedCb(cb) {
+    this.purchaseSeed = cb
   }
   generateSeedModal(seeds) {
     const [title, subheading,content] = this.modalContainer.children[0].children
@@ -104,6 +112,7 @@ export default class Modal {
       cropElement.className = `crop ${crop}`
       cropElement.style.backgroundPosition = userCrops[crop][0].backgroundCoords.join(' ')
       cropElement.setAttribute('data-type', crop)
+      cropElement.setAttribute('data-price', userCrops[crop][0].worth)
       const cropPrice = document.createElement('div')
       cropPrice.className = 'price'
       cropPrice.textContent = userCrops[crop][0].worth
@@ -116,6 +125,7 @@ export default class Modal {
       const seedElement = document.createElement('div')
       seedElement.className = `seed ${seed}`
       seedElement.setAttribute('data-type', seed)
+      seedElement.setAttribute('data-price', shopSeeds[seed][0].worth)
       const seedCounter = document.createElement('div')
       seedCounter.textContent = shopSeeds[seed].length
       const seedPrice = document.createElement('div')
@@ -129,10 +139,14 @@ export default class Modal {
       Sell: userElements
     }
     console.log(this.elementsToNavigate)
-    this.elementsToNavigate[this.shopView][0].classList.add('selected')
-    this.selected = this.elementsToNavigate[this.shopView][0]
-    const { type } = this.selected.dataset
-    subheading.textContent = type;
+    if(this.elementsToNavigate[this.shopView].length) {
+      this.elementsToNavigate[this.shopView][0].classList.add('selected')
+      this.selected = this.elementsToNavigate[this.shopView][0]
+      const { type } = this.selected.dataset
+      subheading.textContent = type;
+    } else {
+      subheading.textContent = 'Out of Stock';
+    }
     content.append(...this.elementsToNavigate[this.shopView])
     this.show()
   }
@@ -187,7 +201,23 @@ export default class Modal {
         }
       },
       close: this.hide.bind(this),
-      select: () => {},
+      select: () => {
+        if (!this.elementsToNavigate[this.shopView].length) {
+          subheading.textContent = 'Out of Stock'
+          return
+        }
+        let { type, price } = this.selected.dataset
+        price = parseInt(price)
+        console.log(price)
+        if (this.shopView === 'Buy') {
+          if (this.isBalanceSufficient(price)) {
+              this.purchaseSeed(type, price)
+              this.elementsToNavigate.shopView
+          } else {
+            subheading.textContent = 'Insufficient Balance'
+          }
+        }
+      },
       switch: () => {
         this.navigationPosition = 0
         this.shopView = this.shopView === 'Buy' ? 'Sell' : 'Buy'
@@ -206,13 +236,35 @@ export default class Modal {
     }
     const currentSeedOrCrop = selectedElementsToNavigate[this.navigationPosition]
     if(!currentSeedOrCrop) {
-      subheading.textContent = 'Empty Inventory';
+      subheading.textContent = this.shopView === 'Buy' ? 'Out of Stock' : 'Empty Inventory';
       this.selected = null
     } else {
       currentSeedOrCrop.classList.add('selected')
       this.selected = currentSeedOrCrop
       const { type } = this.selected.dataset
       subheading.textContent = type;
+    }
+  }
+  resyncShopItemsAfterPurchase() {
+    const itemPurchasedQuantityContainer = this.selected.lastElementChild
+    let quantity = parseInt(itemPurchasedQuantityContainer.textContent)
+    const [, subheading] = this.modalContainer.children[0].children
+    if(quantity === 1) {
+      this.selected.remove()
+      this.elementsToNavigate[this.shopView] = this.elementsToNavigate[this.shopView].filter(element => element !== this.selected)
+      if(this.elementsToNavigate[this.shopView].length) {
+        const [newSelectedElement] = this.elementsToNavigate[this.shopView]
+        this.selected = newSelectedElement
+        this.selected.classList.add('selected')
+        const { type } = this.selected.dataset
+        subheading.textContent = type
+      } else {
+        this.selected = null
+        subheading.textContent = 'Out of Stock'
+      }
+    } else {
+      quantity--
+      itemPurchasedQuantityContainer.textContent = quantity
     }
   }
   selectSeed() {

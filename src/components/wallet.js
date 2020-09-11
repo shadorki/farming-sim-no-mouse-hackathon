@@ -4,6 +4,16 @@ export default class Wallet {
     this.domElement.className = 'wallet'
     this.cash = startingCash || 0
   }
+  isBalanceSufficient(amount) {
+    console.log(this)
+    return this.cash >= amount
+  }
+  spendCash(amount) {
+    this.cash -= amount
+  }
+  earnCash(amount) {
+    this.cash += amount
+  }
   updateCashOnDom() {
     this.domElement.textContent = `$${this.cash}`
   }

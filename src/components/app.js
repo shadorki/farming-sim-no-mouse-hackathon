@@ -17,7 +17,7 @@ export default class App {
     this.tools = new Tools()
     this.inventory = new Inventory()
     this.modal = new Modal(modalContainer)
-    this.wallet = new Wallet(100)
+    this.wallet = new Wallet(10000)
     this.view = 'map'
     this.currentTile = null
     this.playerMovementKeyMap = {
@@ -171,6 +171,13 @@ export default class App {
     this.map.addPlantedTile(this.currentTile)
     this.setCurrentTile(null)
   }
+  purchaseSeed(type, price) {
+    this.wallet.spendCash(price)
+    const seed = this.shop.sellSeed(type)
+    this.inventory.addSeed(seed)
+    this.wallet.updateCashOnDom()
+    this.modal.resyncShopItemsAfterPurchase()
+  }
   handleToolNavigation(key) {
     const action = this.toolsNavigateKeyMap[key]
     this.tools.navigate(action)
@@ -182,6 +189,8 @@ export default class App {
     this.modal.setViewCb(this.setView.bind(this))
     this.modal.setCurrentTileCb(this.setCurrentTile.bind(this))
     this.modal.setPlantSeedCb(this.plantSeed.bind(this))
+    this.modal.setCheckWalletBalanceCb(this.wallet.isBalanceSufficient.bind(this.wallet))
+    this.modal.setPurchaseSeedCb(this.purchaseSeed.bind(this))
   }
   setListeners() {
     window.addEventListener('keydown', this.handleKeyPress.bind(this))
