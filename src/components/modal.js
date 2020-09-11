@@ -10,6 +10,7 @@ export default class Modal {
     this.shopView = null
     this.isBalanceSufficient = null
     this.purchaseSeed = null
+    this.sellCrop = null
   }
   show() {
     this.modalContainer.classList.remove('hidden')
@@ -39,6 +40,9 @@ export default class Modal {
   }
   setPurchaseSeedCb(cb) {
     this.purchaseSeed = cb
+  }
+  setSellCropCb(cb) {
+    this.sellCrop = cb
   }
   generateSeedModal(seeds) {
     const [title, subheading,content] = this.modalContainer.children[0].children
@@ -203,7 +207,7 @@ export default class Modal {
       close: this.hide.bind(this),
       select: () => {
         if (!this.elementsToNavigate[this.shopView].length) {
-          subheading.textContent = 'Out of Stock'
+          subheading.textContent = this.shopView === 'Buy' ? 'Out of Stock' : 'Empty Inventory'
           return
         }
         let { type, price } = this.selected.dataset
@@ -212,10 +216,11 @@ export default class Modal {
         if (this.shopView === 'Buy') {
           if (this.isBalanceSufficient(price)) {
               this.purchaseSeed(type, price)
-              this.elementsToNavigate.shopView
           } else {
             subheading.textContent = 'Insufficient Balance'
           }
+        } else {
+          this.sellCrop(type, price)
         }
       },
       switch: () => {
@@ -260,7 +265,7 @@ export default class Modal {
         subheading.textContent = type
       } else {
         this.selected = null
-        subheading.textContent = 'Out of Stock'
+        subheading.textContent = this.shopView === 'Buy' ? 'Out of Stock' : 'Empty Inventory';
       }
     } else {
       quantity--

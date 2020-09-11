@@ -17,4 +17,7 @@ export default class Shop {
     const seed = this.shopInventory.removeSeed(type)
     return seed
   }
+  buyCrop(crop) {
+    this.shopInventory.addCrop(crop)
+  }
 }

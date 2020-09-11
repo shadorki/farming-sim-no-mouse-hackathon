@@ -33,6 +33,9 @@ export default class Inventory {
     this.crops[crop.type] = this.crops[crop.type] || []
     this.crops[crop.type].push(crop)
   }
+  removeCrop(type) {
+   return this.crops[type].pop()
+  }
   getSeeds() {
     return this.seeds
   }

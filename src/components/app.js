@@ -5,6 +5,7 @@ import Inventory from './inventory'
 import Modal from './modal'
 import Shop from './shop'
 import Wallet from './wallet'
+import Crop from './crops'
 
 export default class App {
   constructor(container, modalContainer) {
@@ -178,6 +179,13 @@ export default class App {
     this.wallet.updateCashOnDom()
     this.modal.resyncShopItemsAfterPurchase()
   }
+  sellCrop(type, price) {
+    this.wallet.earnCash(price)
+    const crop = Crop.getHarvestedCrop(type)
+    const cropType = this.shop.buyCrop(crop)
+    this.wallet.updateCashOnDom()
+    this.modal.resyncShopItemsAfterPurchase()
+  }
   handleToolNavigation(key) {
     const action = this.toolsNavigateKeyMap[key]
     this.tools.navigate(action)
@@ -191,6 +199,7 @@ export default class App {
     this.modal.setPlantSeedCb(this.plantSeed.bind(this))
     this.modal.setCheckWalletBalanceCb(this.wallet.isBalanceSufficient.bind(this.wallet))
     this.modal.setPurchaseSeedCb(this.purchaseSeed.bind(this))
+    this.modal.setSellCropCb(this.sellCrop.bind(this))
   }
   setListeners() {
     window.addEventListener('keydown', this.handleKeyPress.bind(this))
