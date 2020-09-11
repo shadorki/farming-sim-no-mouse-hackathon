@@ -181,10 +181,11 @@ export default class App {
   }
   sellCrop(type, price) {
     this.wallet.earnCash(price)
-    const crop = Crop.getHarvestedCrop(type)
-    const cropType = this.shop.buyCrop(crop)
+    const crop = this.inventory.removeCrop(type)
+    this.shop.buyCrop(crop)
     this.wallet.updateCashOnDom()
     this.modal.resyncShopItemsAfterPurchase()
+    console.log(this.modal)
   }
   handleToolNavigation(key) {
     const action = this.toolsNavigateKeyMap[key]

@@ -26,14 +26,6 @@ export default class Crop {
     const backgroundCoords = this.stages[this.currentStage]
     cropElement.style.backgroundPosition = backgroundCoords.join(' ')
   }
-  static getHarvestedCrop(type) {
-    const data = veggieTable[type]
-    return new HarvestedCrop(
-      type,
-      ['0px', data.stages[0][1]],
-      data.worth
-    )
-  }
   grow() {
     if(!this.isWatered || this.isReadyToHarvest) return;
     this.age++

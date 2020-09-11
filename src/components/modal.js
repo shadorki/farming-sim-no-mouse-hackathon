@@ -111,6 +111,7 @@ export default class Modal {
     title.textContent = this.shopView
     const userElements = []
     const shopElements = []
+    console.log(userCrops)
     for (const crop in userCrops) {
       const cropElement = document.createElement('div')
       cropElement.className = `crop ${crop}`
