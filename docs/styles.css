@@ -1,0 +1,288 @@
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(50, 50, 50);
+  font-family: 'Press Start 2P', cursive;
+}
+
+#container {
+  width: 320px;
+  height: 240px;
+  background-image: url('./assets/images/maps/map1.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  transform: scale(2.0);
+  image-rendering: pixelated;
+  display: flex;
+  flex-wrap: wrap;
+  position: relative;
+}
+
+div.tile-block {
+  height: 32px;
+  width: 16px;
+  border: 1px solid red;
+}
+
+div.player {
+  position: relative;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  height: 32px;
+  width: 16px;
+  image-rendering: initial;
+  transition: all 500ms linear;
+  transition-property: left, top;
+  z-index: 2;
+}
+.player.down {
+  background-image: url('./assets/images/characters/pinkie/idle/front.png');
+}
+.player.up {
+  background-image: url('./assets/images/characters/pinkie/idle/back.png');
+}
+.player.left, .player.right {
+  background-image: url('./assets/images/characters/pinkie/idle/right.png');
+}
+.player.left {
+  -moz-transform: scaleX(-1);
+  -o-transform: scaleX(-1);
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
+  filter: FlipH;
+  -ms-filter: "FlipH";
+}
+.player.down.walking {
+  background-image: url('./assets/images/characters/pinkie/animated/forward-walking.gif');
+}
+.player.up.walking {
+  background-image: url('./assets/images/characters/pinkie/animated/backward-walking.gif');
+}
+.player.left.walking, .player.right.walking {
+  background-image: url('./assets/images/characters/pinkie/animated/right-walking.gif');
+}
+
+.tools-container {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  display: flex;
+}
+.tool-block {
+  margin-right: 1px;
+  height: 24px;
+  width: 24px;
+  background-image: url('./assets/images/tools/tool-block.png');
+  background-position: center;
+  background-size: contain;
+}
+.wallet {
+  height: 24px;
+  width: 72px;
+  background-image: url('./assets/images/ui/wallet-block.png');
+  background-position: center;
+  background-size: contain;
+  position: absolute;
+  bottom: 1px;
+  left: 1px;
+  opacity: 0.8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 2px;
+  font-size: 6px;
+  color: gold
+}
+.selected {
+  border: 1px solid gold;
+}
+.tool-block:not(.selected) {
+  opacity: 0.4;
+}
+.tool {
+  height: 100%;
+  width: 100%;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.tool.inventory {
+  background-image: url('./assets/images/tools/seed-bag.png');
+}
+.tool.watering-can {
+  background-image: url('./assets/images/tools/watering-can.png');
+}
+.tool.shovel {
+  background-image: url('./assets/images/tools/shovel.png');
+}
+.tool.hoe {
+  background-image: url('./assets/images/tools/hoe.png');
+}
+
+.crop, .seed {
+  height: 16px;
+  width: 16px;
+  background-image: url('./assets/images/crops/crops.png');
+  background-repeat: no-repeat;
+  position: relative;
+}
+.crop-container {
+  position: absolute;
+  height: 32px;
+  width: 16px;
+}
+.crop-container > .crop {
+  position: absolute;
+  bottom: 0
+}
+.crop.watered {
+  background-color: rgba(68, 68, 248, 0.37);
+}
+
+.seed.onion {
+  background-position: -80px 0px;
+}
+.seed.string-bean {
+  background-position: -80px -16px;
+}
+.seed.tomato {
+  background-position: -80px -32px;
+}
+.seed.plum {
+  background-position: -80px -48px;
+}
+.seed.pineapple {
+  background-position: -80px -64px;
+}
+.seed.strawberry {
+  background-position: -80px -96px;
+}
+.seed.potato {
+  background-position: -80px -112px;
+}
+.seed.pumpkin {
+  background-position: -80px -128px;
+}
+.seed.corn {
+  background-position: -80px -144px;
+}
+.seed > div, .crop > div {
+  position: absolute;
+  top: 1px;
+  right: 1px;
+  color: white;
+  font-size: 4px;
+}
+.seed > .price, .crop > .price {
+  bottom: 1px;
+  left: 1px;
+  top: initial;
+  right: initial;
+  color: gold;
+}
+.modal-container, .intro-modal-container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(50, 50, 50, 0.7);
+  z-index: 3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.modal{
+  height: 128px;
+  width: 128px;
+  background-image: url('./assets/images/ui/ui-block.png');
+  background-size: contain;
+  opacity: 0.8;
+}
+.intro-modal {
+  height: 220px;
+  width: 220px;
+  background-image: url('./assets/images/ui/scroll.png');
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.8;
+  font-size: .6rem;
+  text-align: center;
+}
+.intro-modal-heading, .intro-modal-content, .intro-modal-pages-counter {
+  padding: 20px 0 0 13px;
+  height: 29%;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+}
+.intro-modal-content {
+  height: 43%;
+  padding: 0;
+  font-size: .4rem;
+  margin: 10px 16px 0 6px;
+  line-height: 9px;
+}
+.intro-modal-pages-counter {
+  height: 25%;
+  justify-content: flex-end;
+  padding-right: 12px;
+}
+.intro-modal-pages-counter > span {
+  padding-left: 5px;
+}
+.modal-title, .modal-subheading {
+  font-size: .4rem;
+  margin: 12px;
+  text-align: center;
+}
+.modal-subheading {
+  font-size: .2rem;
+}
+.modal-content {
+  margin: 6px auto;
+  width: 96px;
+  height: 56px;
+  background-color: rgb(80, 33, 0);
+  display: flex;
+  flex-wrap: wrap;
+  padding: 6px 0;
+}
+.shop {
+  position: absolute;
+  height: 48px;
+  width: 48px;
+  background-image: url('./assets/images/characters/shop/shop.png');
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+.mute-button {
+  position: absolute;
+  height: 16px;
+  width: 16px;
+  top: 1px;
+  left: 1px;
+  background-color: rgba(50, 50, 50, 0.7);
+  border-radius: 4px;
+  opacity: 0.8;
+  background-image: url('./assets/images/ui/sound.png');
+  background-position: -1px 0px;
+}
+.not-muted {
+  background-position: -1px 17px;
+}
+
+
+.hidden {
+  display: none;
+}
