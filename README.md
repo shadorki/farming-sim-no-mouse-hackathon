@@ -7,9 +7,6 @@ A vanilla JS web application to simulate farming, built in 48 hours for the [Min
 - Webpack
 - Babel
 
-## Live Link
-
-Play the live demo [here.](https://farming-sim.uzairashraf.dev)
 
 ## How to Play
 
@@ -75,7 +72,7 @@ Once you have crops you can sell them. You can use the money to purchase differe
 1. Clone the repository
 
   ```bash
-    git clone https://github.com/uzair-ashraf/farming-sim-no-mouse-hackathon.git
+    git clone https://github.com/shadorki/farming-sim-no-mouse-hackathon.git
   ```
 2. Change directories
 
